@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="springTransaction.mapper.TStockOrderMapper">
+
+    <sql id="all_column">
+        id id,
+        stock_id stockId,
+        user_name userName
+    </sql>
+    
+    <insert id="addOrder" parameterType="springTransaction.dao.StockOrder">
+        INSERT into t_stock_order(
+        stock_id,
+        user_name
+        ) VALUES (
+        #{stockId},
+        #{userName}
+        )
+    </insert>
+</mapper>

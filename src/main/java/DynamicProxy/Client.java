@@ -40,6 +40,8 @@ public class Client {
         enhancer.setCallback(new CgTargetInterceptor());
         CgTarget cgTarget = (CgTarget)enhancer.create();
         cgTarget.doSomething();
+
+
     }
 
 

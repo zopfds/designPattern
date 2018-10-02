@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="springTransaction.mapper.TStockMapper">
+
+    <sql id="all_column">
+        id id,
+        total_stock totalStock,
+        used_stock usedStock
+    </sql>
+
+    <select id="getList" resultType="springTransaction.dao.Stock">
+        SELECT <include refid="all_column"/>
+        FROM t_stock
+    </select>
+
+    <select id="getById" resultType="springTransaction.dao.Stock">
+        select
+        <include refid="all_column"/>
+        from t_stock
+        where id=#{id}
+    </select>
+
+    <update id="updateUsedStock">
+        update t_stock
+        SET used_stock = used_stock + 1
+        WHERE id=#{id} AND <![CDATA[used_stock < total_stock]]>
+    </update>
+
+</mapper>

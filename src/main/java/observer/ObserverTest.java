@@ -1,9 +1,9 @@
-package currentProblem;
+package observer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CurrentProblem {
+public class ObserverTest {
 
     public final List<Integer> problems = new ArrayList<>();
 
@@ -24,7 +24,7 @@ public class CurrentProblem {
 
     public static void main(String[] args){
 
-        CurrentProblem currentProblem = new CurrentProblem();
+        ObserverTest currentProblem = new ObserverTest();
 
         for(int i = 0 ; i < 100 ; i++){
             currentProblem.addObserver(i);

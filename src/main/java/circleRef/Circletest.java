@@ -3,7 +3,7 @@ package circleRef;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * 构造器注入循环引用报错
+ * spring 框架 构造器注入循环引用 会报错
  *
  * @author jianbo.pan@mljr.com
  * @version ${VERSION}

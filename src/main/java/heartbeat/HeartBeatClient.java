@@ -19,7 +19,7 @@ public class HeartBeatClient {
 
     private static final Logger logger = LoggerFactory.getLogger(HeartBeatClient.class);
 
-    private static final String serverAddress = "127.0.0.1";
+    private static final String serverAddress = "192.168.0.104";
 
     private static final int port = 20991;
 
@@ -97,7 +97,7 @@ public class HeartBeatClient {
         heartBeatClient.startSendThread(heartBeatData , 20 * 1000L);
 
         try {
-            Thread.currentThread().sleep(10 * 60 * 1000L);
+            Thread.currentThread().sleep(50 * 60 * 1000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

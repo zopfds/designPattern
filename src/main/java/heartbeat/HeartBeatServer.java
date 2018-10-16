@@ -62,6 +62,23 @@ public class HeartBeatServer {
         }
     }
 
+    private static class PrintlnThread implements Runnable{
+        @Override
+        public void run() {
+
+            while(true) {
+                clientServerList.forEach((s, heartBeatData) -> {
+                    logger.info("[HeartBeatServer.PrintlnThread] heartBeatData = {}", heartBeatData);
+                    try {
+                        Thread.currentThread().sleep(1000);
+                    } catch (InterruptedException e) {
+                        logger.error("[HeartBeatServer.PrintlnThread] print thread run error! time = {}", System.currentTimeMillis());
+                    }
+                });
+            }
+        }
+    }
+
     /**
      * 客户端接收线程
      */
@@ -248,8 +265,9 @@ public class HeartBeatServer {
 
     public final void start(){
         this.acceptClient = true;
-        new Thread(new AcceptClientThread()).start();
         scheduledExecutorService.scheduleAtFixedRate(new ExpireThread(), 0 , schedulTime , TimeUnit.SECONDS);
+        new Thread(new PrintlnThread()).start();
+        new Thread(new AcceptClientThread()).start();
     }
 
     public static void main(String[] args){

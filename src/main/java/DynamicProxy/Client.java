@@ -4,7 +4,7 @@ import net.sf.cglib.core.DebuggingClassWriter;
 import net.sf.cglib.proxy.Enhancer;
 
 /**
- * ${DESCRIPTION}
+ * 利用cgi（asm字节码操作库）实现的动态代理，可代理实体类或接口
  *
  * @author jianbo.pan@mljr.com
  * @version ${VERSION}

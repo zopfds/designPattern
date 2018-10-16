@@ -1,7 +1,5 @@
 package springioc;
 
-import javafx.beans.property.Property;
-
 import java.util.ArrayList;
 import java.util.List;
 

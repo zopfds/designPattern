@@ -16,6 +16,7 @@ public class FairLock {
     private Thread lockingThread = null;
     private LinkedList<Object> waitingQueue = new LinkedList<Object>();
     private AtomicInteger atomicInteger = new AtomicInteger(0);
+    private ThreadLocal<Boolean> isFirst = new ThreadLocal<Boolean>();
 
     /**
      * 锁

@@ -7,7 +7,7 @@ import net.sf.cglib.proxy.MethodProxy;
 import java.lang.reflect.Method;
 
 /**
- * ${DESCRIPTION}
+ * 方法测试
  *
  * @author jianbo.pan@mljr.com
  * @version ${VERSION}

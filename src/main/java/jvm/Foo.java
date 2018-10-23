@@ -12,5 +12,10 @@ public class Foo {
         boolean flag = true;
         if(flag) System.out.println("Hello,java!");
         if(flag == true) System.out.println("Hello,jvm!");
+
+
     }
+
+
+
 }

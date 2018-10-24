@@ -31,7 +31,7 @@ public class FileCopyTest {
 
             byte[] buffer = new byte[1024 * 1024];
 
-            while(is.read(buffer) != 0){
+            while(is.read(buffer) != -1){
                 os.write(buffer);
             }
 
@@ -89,7 +89,7 @@ public class FileCopyTest {
     }
 
     public static void main(String[] args){
-        File sourceFile = new File("E:\\AMDD5178.MP4");
+        File sourceFile = new File("E:\\test.MP4");
 
         File ioTargetFile = new File("C:\\Users\\74077\\Desktop\\io.MP4");
         File nioTargetFile = new File("C:\\Users\\74077\\Desktop\\nio.MP4");

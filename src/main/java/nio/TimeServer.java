@@ -42,7 +42,7 @@ public class TimeServer implements Runnable{
     public void createServer(int port){
         try {
             //开启serverSocketChannel
-            ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+            serverSocketChannel = ServerSocketChannel.open();
             //serverSocketChannel绑定地址和端口
             serverSocketChannel.bind(new InetSocketAddress(port));
             //将channel模式设置为非阻塞
@@ -95,9 +95,6 @@ public class TimeServer implements Runnable{
      */
     private void handle(SelectionKey key) throws IOException {
         if(key.isValid()){
-            //获取服务器原始channel
-            ServerSocketChannel serverSocketChannel = (ServerSocketChannel) key.channel();
-
             if(key.isAcceptable()){
                 System.out.println("start to accept client connection!");
                 //接受客户端链接并开启socketchannel来管理客户端来的数据，并且将多路复用器绑定到socketChannel上

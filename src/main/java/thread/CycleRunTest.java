@@ -2,9 +2,15 @@ package thread;
 
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
 import java.util.stream.Stream;
 
+/**
+ * 利用cyclicBarrier实现多人赛跑多线程例子，记录下开始和结束时间
+ *
+ *
+ */
 public class CycleRunTest {
 
     private ConcurrentHashMap<Long , Long> startTimeMap;
@@ -15,23 +21,21 @@ public class CycleRunTest {
 
     private int userCount;
 
+    //所有线程跑完的标志
+    private CountDownLatch finishCountDownLatch;
+
     CycleRunTest(int userCount){
         this.userCount = userCount;
         startTimeMap = new ConcurrentHashMap<>(userCount);
         endTimeMap = new ConcurrentHashMap<>(userCount);
         cyclicBarrier = new CyclicBarrier(userCount);
+        finishCountDownLatch = new CountDownLatch(userCount);
     }
 
     public static void main(String[] args){
         CycleRunTest cycleRunTest = new CycleRunTest(5);
 
         cycleRunTest.run();
-
-        try {
-            Thread.currentThread().sleep(10 * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public void run(){
@@ -40,12 +44,18 @@ public class CycleRunTest {
         });
 
 
-        while(cyclicBarrier.getNumberWaiting() > 0) {
-            try {
-                Thread.currentThread().sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//        while(cyclicBarrier.getNumberWaiting() > 0) {
+//            try {
+//                Thread.currentThread().sleep(50);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+        try {
+            finishCountDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         startTimeMap.entrySet().stream().forEach(entry -> System.out.println("runner : " +
@@ -95,6 +105,8 @@ public class CycleRunTest {
             } catch (BrokenBarrierException e) {
                 e.printStackTrace();
             }
+
+            finishCountDownLatch.countDown();
         }
     }
 }

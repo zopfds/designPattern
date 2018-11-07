@@ -3,7 +3,7 @@ package thread.lock;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
- * 生产者和消费者
+ * 生产者和消费者(问题:notify信号丢失)
  * 第一版，本质是生产者和消费者两者线程间的协调
  *
  * @author jianbo.pan@mljr.com

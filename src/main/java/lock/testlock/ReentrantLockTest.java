@@ -3,7 +3,7 @@ package lock.testlock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * ${DESCRIPTION}
+ * 可重入锁测试
  *
  * @author jianbo.pan@mljr.com
  * @version ${VERSION}

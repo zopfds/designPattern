@@ -1,4 +1,5 @@
 import java.text.MessageFormat;
+import java.util.Arrays;
 
 /**
  * ${DESCRIPTION}
@@ -10,10 +11,19 @@ import java.text.MessageFormat;
 public class MessageFormatTest {
 
     public static void main(String[] args){
-        String testString  = "$name";
+//        String testString  = "$name";
+//
+//        String replaceString = "\\$name";
+//
+//        System.out.println(testString.replaceAll(replaceString,"test"));
 
-        String replaceString = "\\$name";
+        String[] test = new String[10];
+        changeArray(test);
+        Arrays.stream(test).forEach(i -> System.out.println(i));
 
-        System.out.println(testString.replaceAll(replaceString,"test"));
+    }
+
+    public static void changeArray(String[] test){
+        test[1] = "aaa";
     }
 }

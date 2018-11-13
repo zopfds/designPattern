@@ -39,6 +39,9 @@ public class TStockTest {
     @Autowired
     private StockService stockService;
 
+    @Autowired
+    private JedisUtil jedisUtil;
+
     @Test
     public void consumeTaskTest(){
         ExecutorService executorService = Executors.newFixedThreadPool(100);
@@ -83,5 +86,28 @@ public class TStockTest {
     @Test
     public void nestTest(){
         transactionTestService.nestTest();
+    }
+
+    @Test
+    public void jedisTest(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                jedisUtil.set("test1" , "fuck");
+            }
+        }).start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                jedisUtil.set("test2" , "suck");
+            }
+        }).start();
+
+        try {
+            Thread.currentThread().sleep(5 * 60 * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

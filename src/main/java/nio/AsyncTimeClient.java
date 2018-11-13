@@ -126,7 +126,7 @@ public class AsyncTimeClient {
         public void run() {
             latch = new CountDownLatch(1);
             //链接到服务器
-            channel.connect(new InetSocketAddress(host , port));
+            channel.connect(new InetSocketAddress(host , port) , this , this);
 
             System.out.println("client start to connect to server!");
             try {

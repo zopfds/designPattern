@@ -26,6 +26,7 @@ public class StrongReferenceRescue {
     public static void main(String[] args) throws Throwable{
         HOOK = new StrongReferenceRescue();
 
+
         //对象第一次尝试拯救自己
         HOOK = null;
         System.gc();

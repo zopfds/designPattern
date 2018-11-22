@@ -14,4 +14,8 @@ public class SimulateResource {
         System.out.println("before get resource , i = " + i);
         System.out.println("after incr and get resource , i = " + ++i);
     }
+
+    public int get(){
+        return i;
+    }
 }

@@ -120,21 +120,17 @@ public class JedisClusterConfig {
 
 
     public static void main(String[] args){
-//        boolean result = JedisClusterConfig.getDistributeLock("testLock");
-//        System.out.println("get distributelock result = " + result);
-//        boolean releaseResult = JedisClusterConfig.releaseDistributeLock("testLock");
-//        System.out.println("release lock result = "  + releaseResult);
-
+        final int threadCount = 1000;
         final SimulateResource resource = new SimulateResource();
-        final CountDownLatch countDownLatch = new CountDownLatch(10);
+        final CountDownLatch countDownLatch = new CountDownLatch(threadCount);
         String key = "distributeLockTest";
 
         Long startTime = System.currentTimeMillis();
 
         logger.info("begin get Lock , key = {} , startTime = {}" ,key ,  startTime );
-        for(int i = 0 ; i < 10 ; i ++){
+        for(int i = 0 ; i < threadCount ; i ++){
             new Thread(() -> {
-                for(int j = 0 ; j < 100 ; j ++) {
+                for(int j = 0 ; j < 1 ; j ++) {
                     getDistributeLock(key);
                     try {
                         resource.incr();

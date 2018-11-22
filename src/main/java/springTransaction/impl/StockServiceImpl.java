@@ -37,11 +37,10 @@ public class StockServiceImpl implements StockService{
 
     @Override
     public boolean updateUsedStock(long id) {
-
-        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_NESTED);
-        def.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
-        TransactionStatus status = transactionManager.getTransaction(def);
+//        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+//        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_NESTED);
+//        def.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
+//        TransactionStatus status = transactionManager.getTransaction(def);
         try{
             Stock stock = tStockMapper.getById(2);
 
@@ -52,10 +51,10 @@ public class StockServiceImpl implements StockService{
             logger.info("【StockServiceImpl.updateUsedStock】更新库存结果！id = {} , updateResult = {}"
                     , id , updateResult);
 
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
 
         }catch(Exception e){
-            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+//            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             logger.error("【StockServiceImpl.updateUsedStock】更新库存失败，回滚! id = {}" , id ,e);
         }
 

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -31,7 +32,7 @@ public class TStockServiceImpl implements TStockService{
     private StockOrderService stockOrderService;
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED , rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED , isolation = Isolation.REPEATABLE_READ , rollbackFor = Exception.class)
     public boolean consumeStock(long stockId, String userName) {
 
         try{

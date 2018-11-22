@@ -12,7 +12,7 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 
-    <context:component-scan base-package="springTransaction"></context:component-scan>
+    <context:component-scan base-package="*"></context:component-scan>
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="url" value="jdbc:mysql://localhost/demo?useUnicode=true" />
@@ -58,6 +58,18 @@
     <bean id="tradeTransactionManager"
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- Redis配置 -->
+    <bean id="redisConfig" class="JedisUtil">
+        <property name="redisServerHost" value="127.0.0.1"/>
+        <property name="redisServerPort" value="7000" />
+        <!--<property name="redisServerPassword" value=""/>-->
+        <property name="redisServerTimeout" value="5000" />
+        <!-- 定义缓存Key前缀 -->
+        <property name="keyPrefix" value="test" />
+        <!-- 定义缓存开关 其中 true 表示开启动缓存；false 表示关闭缓存 -->
+        <property name="redisSwitch" value="true" />
     </bean>
 
 </beans>

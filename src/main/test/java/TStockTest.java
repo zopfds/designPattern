@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import redis.rediscluster.JedisClusterConfig;
 import springTransaction.*;
 
 import java.util.Date;
@@ -41,6 +42,9 @@ public class TStockTest {
 
     @Autowired
     private JedisUtil jedisUtil;
+
+//    @Autowired
+//    private JedisClusterConfig jedisClusterConfig;
 
     @Test
     public void consumeTaskTest(){
@@ -104,6 +108,9 @@ public class TStockTest {
             }
         }).start();
 
+        new Thread(() -> System.out.println(jedisUtil.get("test1")));
+
+        new Thread(() -> System.out.println(jedisUtil.get("test2")));
         try {
             Thread.currentThread().sleep(5 * 60 * 1000);
         } catch (InterruptedException e) {

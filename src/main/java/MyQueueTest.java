@@ -1,13 +1,21 @@
+import com.alibaba.fastjson.JSON;
 import com.sun.jmx.remote.internal.ArrayQueue;
+
+import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * 数组模拟实现循环队列
  */
-public class MyQueueTest<T>{
+public class MyQueueTest<T> implements Serializable{
     private T[] data;
     private int capacity;
-    private volatile int start;
-    private volatile int end;
+    private int start;
+    private int end;
+
+    public T[] getData() {
+        return data;
+    }
 
     /**
      * 构造方法
@@ -41,10 +49,17 @@ public class MyQueueTest<T>{
     }
 
     /**
-     * 扩充大小
-     * 与jdk实现的区别，jdk逐个复制
+     * 扩充大小，该实现在数量级较大的数据扩容时更快
+     *
+     * jdk与本实现区别
+     * 1.jdk逐个复制,寻址时间较长
+     * 2.该实现直接调用system.arraycopy直接操作内存，速度更快
+     *
      */
     private void resize(int newCapacity){
+        if(this.data.length == 0){
+            throw new IndexOutOfBoundsException("empty!");
+        }
         int size = size();
         if(newCapacity < size){
             throw new IndexOutOfBoundsException("newCapacity smaller than the last");
@@ -84,33 +99,47 @@ public class MyQueueTest<T>{
      * @param args
      */
     public static void main(String[] args) throws InterruptedException {
-        MyQueueTest<Integer> test = new MyQueueTest<>(1000);
-        ArrayQueue<Integer> jdkTest = new ArrayQueue<>(1000);
+        MyQueueTest<Integer> test = new MyQueueTest<>(100000);
+        ArrayQueue<Integer> jdkTest = new ArrayQueue<>(100000);
 
-        for(int i = 0 ; i < 1000 ; i ++){
+        for(int i = 0 ; i < 100000 ; i ++){
             test.add(i);
             jdkTest.add(i);
         }
 
         long startTime = 0;
-        for(int i = 0 ; i < 100 ; i ++){
-            jdkTest.remove();
-            jdkTest.add(1000 + i);
+        for(int i = 0 ; i < 100000 ; i ++){
+            jdkTest.remove(0);
+            jdkTest.add(100000 + i);
             long thisStartTime = System.currentTimeMillis();
-            jdkTest.resize(1001 + i);
+            jdkTest.resize(100001 + i);
             startTime += System.currentTimeMillis() - thisStartTime;
         }
 
+        System.out.println(JSON.toJSONString(jdkTest));
+
         long myStartTime = 0;
-        for(int i = 0 ; i < 100 ; i ++){
+        for(int i = 0 ; i < 100000 ; i ++){
             test.remove();
-            test.add(1000 + i);
+            test.add(100000 + i);
             long thisStartTime = System.currentTimeMillis();
-            test.resize(1001 + i);
+            test.resize(100001 + i);
             myStartTime += System.currentTimeMillis() - thisStartTime;
         }
 
+        System.out.println(JSON.toJSONString(test));
+
         System.out.println("jdk consume time :" + startTime);
-        System.out.println("my consume time :" + startTime);
+        System.out.println("my consume time :" + myStartTime);
+    }
+
+    @Override
+    public String toString() {
+        return "MyQueueTest{" +
+                "data=" + Arrays.toString(data) +
+                ", capacity=" + capacity +
+                ", start=" + start +
+                ", end=" + end +
+                '}';
     }
 }

@@ -1,15 +1,23 @@
 package thread;
 
+import sun.misc.Unsafe;
+
+import java.lang.reflect.Field;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class MultiThreadPrintTest {
 
-    private static final jdk.internal.misc.Unsafe U = jdk.internal.misc.Unsafe.getUnsafe();
-    private static volatile int i = 0;
-    private static final long I_VALUE;
-    private static volatile boolean lock = false;
-    private static final long LOCK_VALUE;
+    private static Unsafe U;
+    private volatile int i = 0;
+    private static long I_VALUE;
+    private volatile boolean lock = false;
+    private static long LOCK_VALUE;
 
     static {
         try {
+            Field f = Unsafe.class.getDeclaredField("theUnsafe");
+            f.setAccessible(true);
+            U = (Unsafe) f.get(null);
             I_VALUE = U.objectFieldOffset
                     (MultiThreadPrintTest.class.getDeclaredField("i"));
             LOCK_VALUE = U.objectFieldOffset
@@ -24,11 +32,15 @@ public class MultiThreadPrintTest {
     }
 
     private boolean lock(){
-        return U.compareAndSetBoolean(this, LOCK_VALUE, false , true);
+        return U.compareAndSwapObject(this, LOCK_VALUE, false , true);
     }
 
     private boolean unLock(){
-        return U.compareAndSetBoolean(this, LOCK_VALUE, true , false);
+        return U.compareAndSwapObject(this, LOCK_VALUE, true , false);
+    }
+
+    private int getI(){
+        return U.getInt(this , I_VALUE);
     }
 
     private static final class MultiThreadAddTest implements Runnable{
@@ -53,7 +65,7 @@ public class MultiThreadPrintTest {
     }
 
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws ClassNotFoundException {
         MultiThreadPrintTest multiThreadPrintTest = new MultiThreadPrintTest();
         for(int j = 0 ; j < 10 ; j ++ ){
             new Thread(new MultiThreadAddTest(multiThreadPrintTest)).start();
@@ -63,6 +75,6 @@ public class MultiThreadPrintTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(i);
+        System.out.println(multiThreadPrintTest.getI());
     }
 }

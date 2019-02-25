@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  */
 public class ProducerAndConsumer {
 
-    private static ConcurrentLinkedDeque<String> queue = new ConcurrentLinkedDeque<String>();
+    private static volatile ConcurrentLinkedDeque<String> queue = new ConcurrentLinkedDeque<String>();
 
     private static int maxSize = 10;
 
@@ -28,26 +28,18 @@ public class ProducerAndConsumer {
      * 消费者
      * @return
      */
-    public static String consume(){
+    public static synchronized String consume(){
         while(true) {
-            //若队列为空则等待
-            if (queue.size() == 0) {
-                synchronized (emptySign) {
-                    try {
-                        System.out.println("queue empty , consumer thread wait!");
-                        emptySign.wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            String elem = queue.pollFirst();
+            if(elem == null){
+                try {
+                    emptySign.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }else{
-                String elem = queue.removeLast();
                 System.out.println("consumer consume object:" + elem);
-                if(queue.size() != maxProducer){
-                    synchronized (fullSign){
-                        fullSign.notify();
-                    }
-                }
+
             }
         }
     }

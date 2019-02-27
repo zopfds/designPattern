@@ -18,7 +18,7 @@ public class LongLiveOldTest {
         allocation2 = new byte[4 * _1MB];
         /**
          * 如果 新生代回收算法为 SerialNew 或 ParNew 与 SerialOld 组合
-         *
+         *k
          * 下面语句将会触发gc,因为新生代大小为10m,Eden区大小为8m,fromspace为1m,tospace为1m
          * 因Eden区大小不满足下面allocation3对象的分配，所以触发gc,又因为tospace大小不满足 allocation1 和 allocation2的大小
          * 所以 allocation1 和 allocation2 将为晋升为老年代对象

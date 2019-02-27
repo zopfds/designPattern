@@ -3,7 +3,7 @@ package thread.lock;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 /**
- * mcs锁
+ * mcs锁,每个节点轮询自己节点的isBlock标志，看是否获取锁继续执行,解锁后需要改变后继节点的isBlock标志以唤醒后继节点
  *
  * 等待线程节点成链表组织
  *
@@ -33,7 +33,7 @@ public class MCSLock {
      * @param currentNode
      */
     public void lock(MCSNode currentNode){
-        //原子更新链表尾部，并且获取旧值,这里竟然不用循环？意思存在并发情况，这里会自动阻塞第二个进来的线程？
+        //原子更新链表尾部，多线程进入会在 AtomicReferenceFieldUpdater 内自旋CAS操作
         MCSNode t = (MCSNode)updater.getAndSet(this , currentNode);         //lock1
         //当前节点不是第一个节点
         if(t != null){

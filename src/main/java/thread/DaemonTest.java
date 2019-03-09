@@ -1,5 +1,7 @@
 package thread;
 
+import java.util.HashMap;
+
 public class DaemonTest {
     public static void main(String[] args){
         InnerClass test = new InnerClass();

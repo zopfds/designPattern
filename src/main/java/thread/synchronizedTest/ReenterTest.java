@@ -1,15 +1,7 @@
 package thread.synchronizedTest;
 
 
-/**
- * synchronized 关键字是加在object上的，当线程等待该monitor时线程进入block状态,进入锁池
- *
- * 本实例展示synchronized是可重入的
- *
- * @author jianbo.pan@mljr.com
- * @version ${VERSION}
- * @create 2018/10/12
- */
+
 public class ReenterTest {
 
     public synchronized void InnerSync(){

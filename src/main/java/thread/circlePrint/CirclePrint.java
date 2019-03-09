@@ -20,6 +20,8 @@ public class CirclePrint {
                 if(flag && num <= maxNum) {
                     System.out.println(num++);
                     flag = false;
+                }else{
+                    Thread.yield();
                 }
             }
         }
@@ -33,6 +35,8 @@ public class CirclePrint {
                 if(!flag && num <= maxNum) {
                     System.out.println(num++);
                     flag = true;
+                }else{
+                    Thread.yield();
                 }
             }
         }

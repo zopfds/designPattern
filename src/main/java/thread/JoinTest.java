@@ -15,7 +15,7 @@ public class JoinTest {
             public void run() {
                 System.out.println("join threas started");
                 try {
-                    Thread.currentThread().sleep(5 * 1000);
+                    Thread.currentThread().sleep(20 * 1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -12,12 +12,12 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 
-    <bean id="firstBean" class="circleRef.FirstBean">
-        <constructor-arg ref="secondBean" />
+    <bean class="circleRef.FirstBean">
+        <!--<constructor-arg ref="secondBean" />-->
     </bean>
 
-    <bean id="secondBean" class="circleRef.SecondBean">
-        <constructor-arg ref="firstBean"/>
-    </bean>
+    <!--<bean id="secondBean" class="circleRef.SecondBean">-->
+        <!--<constructor-arg ref="firstBean"/>-->
+    <!--</bean>-->
 
 </beans>

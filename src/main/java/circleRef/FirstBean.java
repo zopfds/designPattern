@@ -14,4 +14,7 @@ public class FirstBean {
     public FirstBean(SecondBean secondBean) {
         this.secondBean = secondBean;
     }
+
+    public FirstBean(){
+    }
 }

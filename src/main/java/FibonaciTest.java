@@ -35,12 +35,22 @@ public class FibonaciTest {
         return fibonaci2(count - 1 , b , a + b);
     }
 
-    public static void main(String[] args){
-        FibonaciTest test = new FibonaciTest();
-
-        for(int i = 0 ;i < 30 ; i ++) {
-            System.out.println(test.fibonaci(i));
-            System.out.println(test.fibonaci2(i, 1, 1));
+    public static boolean hasOrder(int[] nums , int i , boolean bigger){
+        if(i == nums.length - 2){
+            return bigger ? nums[i] >= nums[i + 1] : nums[i] <= nums[i + 1];
         }
+        return (bigger ? nums[i] >= nums[i + 1] : nums[i] <= nums[i + 1]) && hasOrder(nums , i + 1 , bigger);
+    }
+
+    public static void main(String[] args){
+//        FibonaciTest test = new FibonaciTest();
+//
+//        for(int i = 0 ;i < 30 ; i ++) {
+//            System.out.println(test.fibonaci(i));
+//            System.out.println(test.fibonaci2(i, 1, 1));
+//        }
+
+        int[] test = new int[]{1,2,3,4,5,6,7,8,9,10};
+        System.out.println(hasOrder(test , 0 , false));
     }
 }
